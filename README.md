@@ -1,6 +1,6 @@
 # Quantum Gates and Their Formulas
 
-Quantum gates are the building blocks of quantum circuits. They operate on qubits, the fundamental units of quantum information, and manipulate their states using unitary transformations. This document provides an overview of common quantum gates and their mathematical representations.
+Quantum gates are the building blocks of quantum circuits. They operate on qubits, the fundamental units of quantum information, and manipulate their states using unitary transformations. This document provides an overview of common quantum gates and their Python implementations using `NumPy`.
 
 ## Table of Contents
 1. [Single-Qubit Gates](#single-qubit-gates)
@@ -25,71 +25,73 @@ Quantum gates are the building blocks of quantum circuits. They operate on qubit
 ### Identity Gate (I)
 The Identity gate leaves the qubit state unchanged.
 
-**Matrix Representation:**
-\[
-I = \begin{bmatrix} 1 & 0 \\
-0 & 1 \end{bmatrix}
-\]
+**Python Implementation:**
+```python
+import numpy as np
+
+def identity():
+    return np.array([[1, 0], [0, 1]])
+```
 
 ---
 
 ### Pauli Gates (X, Y, Z)
 1. **Pauli-X (NOT Gate):** Flips the qubit state \(|0\rangle \leftrightarrow |1\rangle\).
 
-   **Matrix Representation:**
-   \[
-   X = \begin{bmatrix} 0 & 1 \\
-   1 & 0 \end{bmatrix}
-   \]
+   **Python Implementation:**
+   ```python
+   def pauli_x():
+       return np.array([[0, 1], [1, 0]])
+   ```
 
 2. **Pauli-Y:** Combines bit and phase flip.
 
-   **Matrix Representation:**
-   \[
-   Y = \begin{bmatrix} 0 & -i \\
-   i & 0 \end{bmatrix}
-   \]
+   **Python Implementation:**
+   ```python
+   def pauli_y():
+       return np.array([[0, -1j], [1j, 0]])
+   ```
 
 3. **Pauli-Z:** Flips the phase of \(|1\rangle\).
 
-   **Matrix Representation:**
-   \[
-   Z = \begin{bmatrix} 1 & 0 \\
-   0 & -1 \end{bmatrix}
-   \]
+   **Python Implementation:**
+   ```python
+   def pauli_z():
+       return np.array([[1, 0], [0, -1]])
+   ```
 
 ---
 
 ### Hadamard Gate (H)
 Creates a superposition state.
 
-**Matrix Representation:**
-\[
-H = \frac{1}{\sqrt{2}} \begin{bmatrix} 1 & 1 \\
-1 & -1 \end{bmatrix}
-\]
+**Python Implementation:**
+```python
+def hadamard():
+    return np.array([[1, 1], [1, -1]]) / np.sqrt(2)
+```
 
 ---
 
 ### Phase Gate (S)
 Applies a phase of \(\pi/2\) to \(|1\rangle\).
 
-**Matrix Representation:**
-\[
-S = \begin{bmatrix} 1 & 0 \\
-0 & i \end{bmatrix}
-\]
+**Python Implementation:**
+```python
+def phase_s():
+    return np.array([[1, 0], [0, 1j]])
+```
 
 ---
 
 ### T Gate
 Applies a phase of \(\pi/4\) to \(|1\rangle\).
 
-**Matrix Representation:**
-\[
-T = \begin{bmatrix} 1 & 0 \\
-0 & e^{i\pi/4} \end{bmatrix}
-\]
+**Python Implementation:**
+```python
+def t_gate():
+    return np.array([[1, 0], [0, np.exp(1j * np.pi / 4)]])
+```
 
 ---
 
@@ -98,64 +100,60 @@ T = \begin{bmatrix} 1 & 0 \\
 ### CNOT Gate
 Flips the target qubit if the control qubit is \(|1\rangle\).
 
-**Matrix Representation:**
-\[
-CNOT = \begin{bmatrix} 1 & 0 & 0 & 0 \\
-0 & 1 & 0 & 0 \\
-0 & 0 & 0 & 1 \\
-0 & 0 & 1 & 0 \end{bmatrix}
-\]
+**Python Implementation:**
+```python
+def cnot():
+    return np.array([
+        [1, 0, 0, 0],
+        [0, 1, 0, 0],
+        [0, 0, 0, 1],
+        [0, 0, 1, 0]
+    ])
+```
 
 ---
 
 ### SWAP Gate
 Swaps the states of two qubits.
 
-**Matrix Representation:**
-\[
-SWAP = \begin{bmatrix} 1 & 0 & 0 & 0 \\
-0 & 0 & 1 & 0 \\
-0 & 1 & 0 & 0 \\
-0 & 0 & 0 & 1 \end{bmatrix}
-\]
+**Python Implementation:**
+```python
+def swap():
+    return np.array([
+        [1, 0, 0, 0],
+        [0, 0, 1, 0],
+        [0, 1, 0, 0],
+        [0, 0, 0, 1]
+    ])
+```
 
 ---
 
 ### Toffoli Gate (CCNOT)
 Flips the target qubit if both control qubits are \(|1\rangle\).
 
-**Matrix Representation:**
-\[
-Toffoli = \begin{bmatrix}
-1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
-0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
-0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
-0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
-0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
-0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
-0 & 0 & 0 & 0 & 0 & 0 & 1 & 0
-\end{bmatrix}
-\]
+**Python Implementation:**
+```python
+def toffoli():
+    return np.eye(8)
+    matrix[6, 6], matrix[6, 7] = 0, 1
+    matrix[7, 6], matrix[7, 7] = 1, 0
+    return matrix
+```
 
 ---
 
 ### Fredkin Gate (CSWAP)
 Swaps two target qubits if the control qubit is \(|1\rangle\).
 
-**Matrix Representation:**
-\[
-Fredkin = \begin{bmatrix}
-1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
-0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
-0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
-0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
-0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 \\
-0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
-0 & 0 & 0 & 0 & 0 & 0 & 0 & 1
-\end{bmatrix}
-\]
+**Python Implementation:**
+```python
+def fredkin():
+    matrix = np.eye(8)
+    matrix[5, 5], matrix[5, 6] = 0, 1
+    matrix[6, 5], matrix[6, 6] = 1, 0
+    return matrix
+```
 
 ---
 
@@ -164,33 +162,36 @@ Fredkin = \begin{bmatrix}
 ### Rotation Gates (Rx, Ry, Rz)
 1. **Rx Gate:** Rotates around the X-axis by an angle \(\theta\).
 
-   **Matrix Representation:**
-   \[
-   Rx(\theta) = \begin{bmatrix}
-   \cos(\theta/2) & -i\sin(\theta/2) \\
-   -i\sin(\theta/2) & \cos(\theta/2)
-   \end{bmatrix}
-   \]
+   **Python Implementation:**
+   ```python
+   def rx(theta):
+       return np.array([
+           [np.cos(theta / 2), -1j * np.sin(theta / 2)],
+           [-1j * np.sin(theta / 2), np.cos(theta / 2)]
+       ])
+   ```
 
 2. **Ry Gate:** Rotates around the Y-axis by an angle \(\theta\).
 
-   **Matrix Representation:**
-   \[
-   Ry(\theta) = \begin{bmatrix}
-   \cos(\theta/2) & -\sin(\theta/2) \\
-   \sin(\theta/2) & \cos(\theta/2)
-   \end{bmatrix}
-   \]
+   **Python Implementation:**
+   ```python
+   def ry(theta):
+       return np.array([
+           [np.cos(theta / 2), -np.sin(theta / 2)],
+           [np.sin(theta / 2), np.cos(theta / 2)]
+       ])
+   ```
 
 3. **Rz Gate:** Rotates around the Z-axis by an angle \(\theta\).
 
-   **Matrix Representation:**
-   \[
-   Rz(\theta) = \begin{bmatrix}
-   e^{-i\theta/2} & 0 \\
-   0 & e^{i\theta/2}
-   \end{bmatrix}
-   \]
+   **Python Implementation:**
+   ```python
+   def rz(theta):
+       return np.array([
+           [np.exp(-1j * theta / 2), 0],
+           [0, np.exp(1j * theta / 2)]
+       ])
+   ```
 
 ---
 
@@ -198,13 +199,15 @@ Fredkin = \begin{bmatrix}
 
 Measurement collapses a qubit's state into one of the basis states \(|0\rangle\) or \(|1\rangle\) with probabilities determined by the squared amplitudes of the state vector.
 
-**Probability Formula:**
-\[
-P(\text{outcome } |0\rangle) = |\alpha|^2, \quad P(\text{outcome } |1\rangle) = |\beta|^2
-\]
-where the qubit state is \(|\psi\rangle = \alpha|0\rangle + \beta|1\rangle\).
+**Python Implementation:**
+```python
+def measure(state):
+    probabilities = np.abs(state) ** 2
+    outcome = np.random.choice(len(state), p=probabilities)
+    return outcome
+```
 
 ---
 
-This document serves as a reference for quantum gates and their mathematical foundations. For more details or implementation examples, explore quantum programming libraries like [Qiskit](https://qiskit.org) or [Cirq](https://quantumai.google/cirq).
+This document serves as a reference for quantum gates and their Python implementations. For more details or practical usage, explore quantum programming libraries like [Qiskit](https://qiskit.org) or [Cirq](https://quantumai.google/cirq).
 
